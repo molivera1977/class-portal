@@ -8,8 +8,7 @@
         /* --- CSS STYLES --- */
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --bg-color: #f4f6f9;
+            --bg-color: #f0f2f5;
             --card-bg: #ffffff;
             --text-color: #333;
         }
@@ -28,30 +27,60 @@
             color: white;
             padding: 2rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
         }
+
+        /* HEADER SIDE IMAGES */
+        .header-side-img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 140px;
+            width: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+            opacity: 0.9;
+            transition: transform 0.3s ease;
+        }
+
+        .header-side-img:hover {
+            transform: translateY(-50%) scale(1.05);
+            opacity: 1;
+        }
+
+        .left-img { left: 40px; }
+        .right-img { right: 40px; }
 
         /* Profile Pic Style */
         .profile-pic {
             width: 120px;
             height: 120px;
-            border-radius: 50%; /* Makes it a circle */
+            border-radius: 50%;
             border: 4px solid white;
             object-fit: cover;
             margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
         }
 
         header h1 {
             margin: 0;
             font-size: 2.5rem;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 10;
         }
 
         header p {
             margin-top: 10px;
             font-size: 1.1rem;
             opacity: 0.9;
+            position: relative;
+            z-index: 10;
         }
 
         /* Filter Tabs */
@@ -59,7 +88,7 @@
             text-align: center;
             padding: 20px 10px;
             background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -81,19 +110,21 @@
         .filter-btn:hover {
             border-color: var(--primary-color);
             color: var(--primary-color);
+            background-color: #f9f9f9;
         }
 
         .filter-btn.active {
             background-color: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(44, 62, 80, 0.3);
         }
 
         /* Grid Layout */
         .portal-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 30px;
             padding: 40px 20px;
             max-width: 1200px;
             margin: 0 auto;
@@ -104,17 +135,19 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none; /* Removes underline from links */
+            text-decoration: none;
             color: inherit;
-            display: flex; /* Flex is used for filtering logic */
+            display: flex;
             flex-direction: column;
+            border-top: 6px solid #ccc;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.1);
         }
 
         .card-image {
@@ -122,6 +155,7 @@
             height: 180px;
             background-color: #eee;
             overflow: hidden;
+            border-bottom: 1px solid #eee;
         }
 
         .card-image img {
@@ -156,8 +190,9 @@
             color: #555;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* Footer */
@@ -169,15 +204,18 @@
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 600px) {
+        @media (max-width: 800px) {
             header h1 { font-size: 1.8rem; }
             .filter-btn { padding: 8px 15px; font-size: 0.8rem; }
+            .header-side-img { display: none; }
         }
     </style>
 </head>
 <body>
 
     <header>
+        <img src="images/class.jpg" class="header-side-img left-img" alt="Classroom">
+        <img src="images/books.jpg" class="header-side-img right-img" alt="Books">
         <img src="images/profile.jpg" alt="Profile Picture" class="profile-pic">
         
         <h1>Mr. O's Class Portal</h1>
@@ -191,14 +229,45 @@
             <button class="filter-btn" data-filter="story-tests">Story Tests</button>
             <button class="filter-btn" data-filter="math-reviews">Math Reviews</button>
             <button class="filter-btn" data-filter="math-tests">Math Tests</button>
+            <button class="filter-btn" data-filter="websites">Websites</button>
         </div>
     </div>
 
     <main class="portal-grid">
 
+        <a href="https://launchpad.classlink.com/bridgeport" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/mybps.jpg" alt="ClassLink">
+            </div>
+            <div class="card-content">
+                <div class="card-title">ClassLink Login</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://www.ixl.com/signin" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/ixl.jpg" alt="IXL">
+            </div>
+            <div class="card-content">
+                <div class="card-title">IXL Learning</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://www.getepic.com/students" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/epic.jpg" alt="Epic!">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Epic! Books</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
         <a href="https://molivera1977.github.io/animal-adaptations-vocab-games/index.html" class="card" target="_blank">
             <div class="card-image">
-                <img src="images/animal-adaptations-vocab-games.jpeg" alt="Animal Adaptations">
+                <img src="images/animal-adaptations-vocab-games.jpg" alt="Animal Adaptations">
             </div>
             <div class="card-content">
                 <div class="card-title">Animal Adaptations Review</div>
@@ -443,9 +512,45 @@
     </footer>
 
     <script>
+        // 1. Setup Variables
         const filterBtns = document.querySelectorAll('.filter-btn');
         const cards = document.querySelectorAll('.card');
 
+        // 2. Define Colors
+        const colors = {
+            reading: '#3498db',   // Blue
+            math: '#9b59b6',      // Purple
+            website: '#f39c12',   // Orange for Websites
+            testprep: '#1abc9c',  // Teal
+            default: '#95a5a6'    // Grey
+        };
+
+        // 3. Auto-Colorize Cards on Load
+        cards.forEach(card => {
+            const tag = card.querySelector('.card-tag');
+            const tagText = tag.textContent.toLowerCase();
+
+            let color = colors.default;
+
+            if (tagText.includes('math')) {
+                color = colors.math;
+            } else if (tagText.includes('reading')) {
+                color = colors.reading;
+            } else if (tagText.includes('website')) {
+                color = colors.website;
+            } else if (tagText.includes('prep') || tagText.includes('nwea')) {
+                color = colors.testprep;
+            }
+
+            // Apply Color to Tag
+            tag.style.backgroundColor = color;
+            tag.style.color = 'white';
+
+            // Apply Color Stripe to Card Top
+            card.style.borderTopColor = color;
+        });
+
+        // 4. Tab Filtering Logic
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 // Remove active class from all buttons
@@ -456,23 +561,29 @@
                 const filterValue = btn.getAttribute('data-filter');
 
                 cards.forEach(card => {
-                    // Get the text content of the card to check against
                     const title = card.querySelector('.card-title').textContent.toLowerCase();
                     const tag = card.querySelector('.card-tag').textContent.toLowerCase();
 
                     if (filterValue === 'all') {
                         card.style.display = 'flex';
+                    }
+                    // Websites
+                    else if (filterValue === 'websites') {
+                        if (tag.includes('website')) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     } 
-                    // LOGIC FOR STORY (READING) REVIEWS
+                    // Reading Reviews
                     else if (filterValue === 'story-reviews') {
-                        // "Review" OR "Vocab" in the title counts as a review
                         if (tag.includes('reading') && (title.includes('review') || title.includes('vocab'))) {
                             card.style.display = 'flex';
                         } else {
                             card.style.display = 'none';
                         }
                     }
-                    // LOGIC FOR STORY (READING) TESTS
+                    // Reading Tests
                     else if (filterValue === 'story-tests') {
                         if (tag.includes('reading') && title.includes('test')) {
                             card.style.display = 'flex';
@@ -480,7 +591,7 @@
                             card.style.display = 'none';
                         }
                     }
-                    // LOGIC FOR MATH REVIEWS
+                    // Math Reviews
                     else if (filterValue === 'math-reviews') {
                         if (tag.includes('math') && title.includes('review')) {
                             card.style.display = 'flex';
@@ -488,7 +599,7 @@
                             card.style.display = 'none';
                         }
                     }
-                    // LOGIC FOR MATH TESTS
+                    // Math Tests
                     else if (filterValue === 'math-tests') {
                         if (tag.includes('math') && title.includes('test')) {
                             card.style.display = 'flex';
