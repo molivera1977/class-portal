@@ -265,6 +265,36 @@
             </div>
         </a>
 
+        <a href="https://molivera1977.github.io/Who-Answered-It-Best-1/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/who-answered-it-best-1.jpg" alt="Who Answered It Best">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Who Answered It Best?</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-7-and-8-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-7-and-8-review.jpg" alt="Math Module 7 & 8">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 7 & 8 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Math-IAB-Review-Numbers-Operations-Base-Ten/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/sbac-math-review-nbt.jpg" alt="SBAC Math Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Math Review: NBT</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
         <a href="https://molivera1977.github.io/animal-adaptations-test/" class="card" target="_blank">
             <div class="card-image">
                 <img src="images/animal-adaptations-test.jpg" alt="Animal Adaptations Test">
@@ -284,6 +314,8 @@
                 <span class="card-tag">Reading</span>
             </div>
         </a>
+
+    
 
         <a href="https://molivera1977.github.io/animal-adaptations-logic-lab/" class="card" target="_blank">
             <div class="card-image">
@@ -605,10 +637,9 @@
                             card.style.display = 'none';
                         }
                     } 
-                    // Reading Reviews + Logic Lab
+                    // Reading Reviews + Logic Lab + Best Answer Game
                     else if (filterValue === 'story-reviews') {
-                        // Added 'logic' so it catches "Logic Lab"
-                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic'))) {
+                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic') || title.includes('best'))) {
                             card.style.display = 'flex';
                         } else {
                             card.style.display = 'none';
