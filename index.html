@@ -265,6 +265,16 @@
             </div>
         </a>
 
+        <a href="https://molivera1977.github.io/the-ant-and-the-grasshopper-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-ant-and-the-grasshopper-test.jpg" alt="The Ant and the Grasshopper Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">The Ant and the Grasshopper: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
         <a href="https://molivera1977.github.io/the-ant-and-the-grasshopper-review/" class="card" target="_blank">
             <div class="card-image">
                 <img src="images/the-ant-and-the-grasshopper-review.jpeg" alt="The Ant and the Grasshopper Review">
@@ -324,8 +334,6 @@
                 <span class="card-tag">Math</span>
             </div>
         </a>
-
-        
 
         <a href="https://molivera1977.github.io/Who-Answered-It-Best-1/" class="card" target="_blank">
             <div class="card-image">
@@ -700,7 +708,10 @@
                     } 
                     // Reading Reviews + Logic Lab + Best Answer Game + Architects + Fable
                     else if (filterValue === 'story-reviews') {
-                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic') || title.includes('best') || title.includes('architects') || title.includes('grasshopper'))) {
+                        // REMOVED 'grasshopper' keyword because the new Test has "Grasshopper" in the title 
+                        // and we don't want the Test to show up in the Review tab.
+                        // The Review card already has "Review" in the title, so it is covered by title.includes('review').
+                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic') || title.includes('best') || title.includes('architects'))) {
                             card.style.display = 'flex';
                         } else {
                             card.style.display = 'none';
