@@ -225,8 +225,8 @@
     <div class="filter-container">
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="story-reviews">Story Reviews</button>
-            <button class="filter-btn" data-filter="story-tests">Story Tests</button>
+            <button class="filter-btn" data-filter="reading-reviews">Reading Reviews</button>
+            <button class="filter-btn" data-filter="reading-tests">Reading Tests</button>
             <button class="filter-btn" data-filter="math-reviews">Math Reviews</button>
             <button class="filter-btn" data-filter="math-tests">Math Tests</button>
             <button class="filter-btn" data-filter="websites">Websites</button>
@@ -265,6 +265,16 @@
             </div>
         </a>
 
+        <a href="https://molivera1977.github.io/qps-literacy-hub/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/qps-literacy-hub.png" alt="QPS Literacy Hub">
+            </div>
+            <div class="card-content">
+                <div class="card-title">QPS Literacy Hub</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
         <a href="https://molivera1977.github.io/math-module-11-review/" class="card" target="_blank">
             <div class="card-image">
                 <img src="images/math-module-11-review.jpg" alt="Math Module 11 Review">
@@ -287,7 +297,7 @@
 
         <a href="https://molivera1977.github.io/the-ant-and-the-grasshopper-review/" class="card" target="_blank">
             <div class="card-image">
-                <img src="images/the-ant-and-the-grasshopper-review.jpeg" alt="The Ant and the Grasshopper Review">
+                <img src="images/the-ant-and-the-grasshopper-review.jpg" alt="The Ant and the Grasshopper Review">
             </div>
             <div class="card-content">
                 <div class="card-title">The Ant and the Grasshopper: Review</div>
@@ -297,7 +307,7 @@
 
         <a href="https://molivera1977.github.io/Answer-Architects---Good-vs.-Better/" class="card" target="_blank">
             <div class="card-image">
-                <img src="images/the-answer-architects-good-vs-better.jpeg" alt="Good vs. Better">
+                <img src="images/the-answer-architects-good-vs-better.jpg" alt="Good vs. Better">
             </div>
             <div class="card-content">
                 <div class="card-title">Answer Architects: Good vs. Better</div>
@@ -307,7 +317,7 @@
 
         <a href="https://molivera1977.github.io/the-answer-architects/" class="card" target="_blank">
             <div class="card-image">
-                <img src="images/the-answer-architects.jpeg" alt="The Answer Architects">
+                <img src="images/the-answer-architects.jpg" alt="The Answer Architects">
             </div>
             <div class="card-content">
                 <div class="card-title">The Answer Architects</div>
@@ -317,7 +327,7 @@
 
         <a href="https://molivera1977.github.io/math-fact-review-tens/" class="card" target="_blank">
             <div class="card-image">
-                <img src="images/math-fact-review-tens.jpeg" alt="Math Fact Review Tens">
+                <img src="images/math-fact-review-tens.jpg" alt="Math Fact Review Tens">
             </div>
             <div class="card-content">
                 <div class="card-title">Math Fact Review: Multiples of 10</div>
@@ -337,7 +347,7 @@
 
         <a href="https://molivera1977.github.io/math-fact-review/" class="card" target="_blank">
             <div class="card-image">
-                <img src="images/math-fact-review.jpeg" alt="Math Fact Review">
+                <img src="images/math-fact-review.jpg" alt="Math Fact Review">
             </div>
             <div class="card-content">
                 <div class="card-title">Math Fact Review</div>
@@ -384,7 +394,6 @@
                 <span class="card-tag">Reading</span>
             </div>
         </a>
-
 
         <a href="https://molivera1977.github.io/animal-adaptations-review/" class="card" target="_blank">
             <div class="card-image">
@@ -716,19 +725,16 @@
                             card.style.display = 'none';
                         }
                     } 
-                    // Reading Reviews + Logic Lab + Best Answer Game + Architects + Fable
-                    else if (filterValue === 'story-reviews') {
-                        // REMOVED 'grasshopper' keyword because the new Test has "Grasshopper" in the title 
-                        // and we don't want the Test to show up in the Review tab.
-                        // The Review card already has "Review" in the title, so it is covered by title.includes('review').
-                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic') || title.includes('best') || title.includes('architects'))) {
+                    // Reading Reviews
+                    else if (filterValue === 'reading-reviews') {
+                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic') || title.includes('best') || title.includes('architects') || title.includes('literacy'))) {
                             card.style.display = 'flex';
                         } else {
                             card.style.display = 'none';
                         }
                     }
                     // Reading Tests
-                    else if (filterValue === 'story-tests') {
+                    else if (filterValue === 'reading-tests') {
                         if (tag.includes('reading') && title.includes('test')) {
                             card.style.display = 'flex';
                         } else {
