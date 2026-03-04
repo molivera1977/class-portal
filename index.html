@@ -265,6 +265,16 @@
             </div>
         </a>
 
+        <a href="https://molivera1977.github.io/ranita-the-frog-princess-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/ranita-the-frog-princess.png" alt="Ranita The Frog Princess Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Ranita: The Frog Princess Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
         <a href="https://molivera1977.github.io/math-module-11-test/" class="card" target="_blank">
             <div class="card-image">
                 <img src="images/math-module-11-test.png" alt="Math Module 11 Test">
@@ -672,11 +682,11 @@
     </footer>
 
     <script>
-        // Setup Variables
+        // 1. Setup Variables
         const filterBtns = document.querySelectorAll('.filter-btn');
         const cards = document.querySelectorAll('.card');
 
-        // Define Colors
+        // 2. Define Colors
         const colors = {
             reading: '#3498db',   // Blue
             math: '#9b59b6',      // Purple
@@ -685,7 +695,7 @@
             default: '#95a5a6'    // Grey
         };
 
-        // Auto-Colorize Cards on Load
+        // 3. Auto-Colorize Cards on Load
         cards.forEach(card => {
             const tag = card.querySelector('.card-tag');
             const tagText = tag.textContent.toLowerCase();
@@ -702,15 +712,20 @@
                 color = colors.testprep;
             }
 
+            // Apply Color to Tag
             tag.style.backgroundColor = color;
             tag.style.color = 'white';
+
+            // Apply Color Stripe to Card Top
             card.style.borderTopColor = color;
         });
 
-        // FIXED TAB FILTERING LOGIC
+        // 4. Tab Filtering Logic
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
+                // Remove active class from all buttons
                 filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
                 btn.classList.add('active');
 
                 const filterValue = btn.getAttribute('data-filter');
@@ -722,24 +737,45 @@
                     if (filterValue === 'all') {
                         card.style.display = 'flex';
                     }
+                    // Websites
                     else if (filterValue === 'websites') {
-                        tag.includes('website') ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
+                        if (tag.includes('website')) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } 
+                    // Reading Reviews
                     else if (filterValue === 'reading-reviews') {
-                        // Matches 'Reading' items that ARE NOT tests
-                        (tag.includes('reading') && !title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        if (tag.includes('reading') && (title.includes('review') || title.includes('vocab') || title.includes('logic') || title.includes('best') || title.includes('architects') || title.includes('literacy'))) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     }
+                    // Reading Tests
                     else if (filterValue === 'reading-tests') {
-                        // Matches 'Reading' items that ARE tests
-                        (tag.includes('reading') && title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        if (tag.includes('reading') && title.includes('test')) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     }
+                    // Math Reviews
                     else if (filterValue === 'math-reviews') {
-                        // Matches 'Math' items that ARE NOT tests
-                        (tag.includes('math') && !title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        if (tag.includes('math') && title.includes('review')) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     }
+                    // Math Tests
                     else if (filterValue === 'math-tests') {
-                        // Matches 'Math' items that ARE tests
-                        (tag.includes('math') && title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        if (tag.includes('math') && title.includes('test')) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
                     }
                 });
             });
