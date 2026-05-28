@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. O's Class Portal</title>
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-color: #2c3e50;
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* HEADER SIDE IMAGES */
+        .header-side-img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 140px;
+            width: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+            opacity: 0.9;
+            transition: transform 0.3s ease;
+        }
+
+        .header-side-img:hover {
+            transform: translateY(-50%) scale(1.05);
+            opacity: 1;
+        }
+
+        .left-img { left: 40px; }
+        .right-img { right: 40px; }
+
+        /* Profile Pic Style */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 10;
+        }
+
+        header p {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Filter Tabs */
+        .filter-container {
+            text-align: center;
+            padding: 20px 10px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .filter-btn {
+            background: none;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: #f9f9f9;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(44, 62, 80, 0.3);
+        }
+
+        /* Grid Layout */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            border-top: 6px solid #ccc;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            background-color: #eee;
+            overflow: hidden;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .card-tag {
+            align-self: flex-start;
+            padding: 5px 12px;
+            background-color: #eef2f7;
+            color: #555;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 800px) {
+            header h1 { font-size: 1.8rem; }
+            .filter-btn { padding: 8px 15px; font-size: 0.8rem; }
+            .header-side-img { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="images/class.png" class="header-side-img left-img" alt="Classroom">
+        <img src="images/books.png" class="header-side-img right-img" alt="Books">
+        <img src="images/profile.png" alt="Profile Picture" class="profile-pic">
+        
+        <h1>Mr. O's Class Portal</h1>
+        <p>4th Grade</p>
+    </header>
+
+    <div class="filter-container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="reading-reviews">Reading Reviews</button>
+            <button class="filter-btn" data-filter="reading-tests">Reading Tests</button>
+            <button class="filter-btn" data-filter="math-reviews">Math Reviews</button>
+            <button class="filter-btn" data-filter="math-tests">Math Tests</button>
+            <button class="filter-btn" data-filter="websites">Websites</button>
+        </div>
+    </div>
+
+    <main class="portal-grid">
+
+        <a href="https://launchpad.classlink.com/bridgeport" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/mybps.png" alt="ClassLink">
+            </div>
+            <div class="card-content">
+                <div class="card-title">ClassLink Login</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://www.ixl.com/signin" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/ixl.png" alt="IXL">
+            </div>
+            <div class="card-content">
+                <div class="card-title">IXL Learning</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://www.getepic.com/students" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/epic.png" alt="Epic!">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Epic! Books</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/Mr.Os-general-knowledge-hub/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/Mr.O's-general-knowledge-hub.png" alt="General Knowledge Hub">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Mr. O's General Knowledge Hub</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-fact-review-tens/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-fact-review-tens.png" alt="Math Fact Review Tens">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Fact Review: Multiples of 10</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-fact-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-fact-review.png" alt="Math Fact Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Fact Review</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/MrO-Messenger/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/MrO-Messenger.png" alt="Mr. O's Messenger">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Mr. O's Messenger</div>
+                <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/CLOZE-Jungle-Adventure/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/CLOZE-Jungle-Adventure.png" alt="CLOZE: Jungle Adventure">
+            </div>
+            <div class="card-content">
+                <div class="card-title">CLOZE: Jungle Adventure</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/Math-Monsters/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/Math-Monsters.png" alt="Math Monsters">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Monsters</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Reading-Review-Inferences-Set-3/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/SBAC-Reading-Review-Inferences-Set-3.png" alt="SBAC Reading Review: Inferences Set 3">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Reading Review: Inferences • Set 3</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Math-Review-Comprehensive-Set-3/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/SBAC-Math-Review-Comprehensive-Set-3.png" alt="SBAC Math Review: Comprehensive Practice Set 3">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Math Review: Comprehensive Practice • Set 3</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Reading-Review-Inferences-Set-2/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/SBAC-Reading-Review-Inferences-Set-2.png" alt="SBAC Reading Review: Inferences Set 2">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Reading Review: Inferences • Set 2</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Math-Review-Comprehensive-Set-2/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/SBAC-Math-Review-Comprehensive-Set-2.png" alt="SBAC Math Review: Comprehensive Practice Set 2">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Math Review: Comprehensive Practice • Set 2</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/Math-Lesson-Multiplying-Fractions/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/Math-Lesson-Multiplying-Fractions.png" alt="Math Lesson: Multiplying Whole Numbers x Fractions">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Lesson: Multiplying Whole Numbers × Fractions</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Math-Review-Comprehensive-Set-1/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/SBAC-Math-Review-Comprehensive.png" alt="SBAC Math Review: Comprehensive Practice">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Math Review: Comprehensive Practice - Set 1</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Reading-Review-Inferences-Set-1/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/sbac-reading-review-inferences.png" alt="SBAC Reading Review: Inferences">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Reading Review: Inferences - Set 1</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-16-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-16-review.png" alt="Math Module 16 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 16 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-15-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-15-review.png" alt="Math Module 15 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 15 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/judys-appalachia-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/judys-appalachia-test.png" alt="Judy's Appalachia Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Judy's Appalachia: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/judys-appalachia-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/judys-appalachia-review.png" alt="Judy's Appalachia Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">"Judy's Appalachia" Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/aguinaldo-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/aguinaldo-test.png" alt="Aguinaldo Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">"Aguinaldo" Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/aguinaldo-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/aguinaldo-review.png" alt="Aguinaldo Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">"Aguinaldo" Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-math-review-IAB-fractions-and-decimals/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/sbac-math-review-fractions-decimals.png" alt="SBAC Math Review Fractions and Decimals">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Math Review: Fractions & Decimals</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-14-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-14-review.png" alt="Math Module 14 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 14 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-12-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-12-test.png" alt="Math Module 12 Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 12 Test</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-12-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-12-review.png" alt="Math Module 12 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 12 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/remembering-hurricane-katrina-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/remembering-hurricane-katrina-test.png" alt="Hurricane Katrina Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Remembering Hurricane Katrina: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/remembering-hurricane-katrina-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/remembering-hurricane-katrina-review.png" alt="Hurricane Katrina Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Remembering Hurricane Katrina Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/ranita-the-frog-princess-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/ranita-the-frog-princess-test.png" alt="Ranita The Frog Princess Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Ranita: The Frog Princess Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/ranita-the-frog-princess-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/ranita-the-frog-princess-review.png" alt="Ranita Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Ranita: The Frog Princess Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-11-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-11-test.png" alt="Math Module 11 Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 11 Test</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/qps-literacy-hub/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/qps-literacy-hub.png" alt="QPS Literacy Hub">
+            </div>
+            <div class="card-content">
+                <div class="card-title">QPS Literacy Hub</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-11-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-11-review.png" alt="Math Module 11 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 11 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+        
+        <a href="https://molivera1977.github.io/the-ant-and-the-grasshopper-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-ant-and-the-grasshopper-test.png" alt="The Ant and the Grasshopper Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">The Ant and the Grasshopper: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/the-ant-and-the-grasshopper-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-ant-and-the-grasshopper-review.png" alt="The Ant and the Grasshopper Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">The Ant and the Grasshopper: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/Answer-Architects---Good-vs.-Better/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-answer-architects-good-vs-better.png" alt="Good vs. Better">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Answer Architects: Good vs. Better</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/the-answer-architects/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-answer-architects.png" alt="The Answer Architects">
+            </div>
+            <div class="card-content">
+                <div class="card-title">The Answer Architects</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/who-answered-it-best-2/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/who-answered-it-best-2.png" alt="Who Answered It Best Part 2">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Who Answered It Best? (Part 2)</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/Who-Answered-It-Best-1/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/who-answered-it-best-1.png" alt="Who Answered It Best">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Who Answered It Best?</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-7-and-8-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-7-and-8-review.png" alt="Math Module 7 & 8">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 7 & 8 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/SBAC-Math-IAB-Review-Numbers-Operations-Base-Ten/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/sbac-math-review-nbt.png" alt="SBAC Math Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Math Review: NBT</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+       <a href="https://molivera1977.github.io/animal-adaptations-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/animal-adaptations-test.png" alt="Animal Adaptations Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Animal Adaptations: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/animal-adaptations-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/animal-adaptations-review.png" alt="Animal Adaptations Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Animal Adaptations: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/animal-adaptations-logic-lab/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/animal-adaptations-logic-lab.png" alt="Logic Lab">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Animal Adaptations: Logic Lab</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/animal-adaptations-vocab-games/index.html" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/animal-adaptations-vocab-games.png" alt="Animal Adaptations Games">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Animal Adaptations: Vocab Games</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/nwea-mid-year-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/nwea-mid-year-review.png" alt="NWEA Mid-Year Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">NWEA Mid-Year Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/kids-in-business-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/kids-in-business-test.png" alt="Kids in Business Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Kids in Business: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/kids-in-business-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/kids-in-business-review.png" alt="Kids in Business Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Kids in Business: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-5-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-5-test.png" alt="Math Module 5 Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 5 Test</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-5-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-5-review.png" alt="Math Module 5 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 5 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/dollars-and-sense-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/dollars-and-sense-test.png" alt="Dollars and Sense Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Dollars and Sense: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/dollars-and-sense-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/dollars-and-sense-review.png" alt="Dollars and Sense Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Dollars and Sense: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/speaking-out-to-stop-bullying-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/speaking-out-to-stop-bullying-test.png" alt="Speaking Out to Stop Bullying Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Speaking Out to Stop Bullying: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/speaking-out-to-stop-bullying-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/speaking-out-to-stop-bullying-review.png" alt="Speaking Out to Stop Bullying">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Speaking Out to Stop Bullying: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-3-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-3-test.png" alt="Math Module 3 Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 3 Test</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-3-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-3-review.png" alt="Math Module 3 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 3 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/experts-inc-online-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/experts-inc-test.png" alt="Experts Inc. Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Experts, Inc.: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/experts-inc-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/experts-inc-review.png" alt="Experts Inc. Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Experts, Inc. Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/the-talent-show-online-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-talent-show-test.png" alt="The Talent Show Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">The Talent Show: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/the-talent-show-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/the-talent-show-review.png" alt="The Talent Show">
+            </div>
+            <div class="card-content">
+                <div class="card-title">The Talent Show: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/Math-Module-2-Test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-2-test.png" alt="Math Module 2 Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 2 Test</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-2-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/math-module-2-review.png" alt="Math Module 2">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 2 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/earthquakes-online-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/earthquakes-test.png" alt="Earthquakes Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Earthquakes: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/earthquakes-review-site/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/earthquakes-review.png" alt="Earthquakes Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Earthquakes: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/a-world-of-change-test/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/a-world-of-change-test.png" alt="World of Change Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">A World of Change: Test</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/world-of-change-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/a-world-of-change-review.png" alt="World of Change Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">A World of Change: Review</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/a-world-of-change-vocab-games/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/a-world-of-change-vocab-games.png" alt="World of Change">
+            </div>
+            <div class="card-content">
+                <div class="card-title">A World of Change: Vocab</div>
+                <span class="card-tag">Reading</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/math-module-1-review/" class="card" target="_blank">
+            <div class="card-image">
+                <img src="images/Math-Module-1-Review.png" alt="Math Module 1 Review">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 1 Review</div>
+                <span class="card-tag">Math</span>
+            </div>
+        </a>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Mr. O's Class - 4th Grade</p>
+    </footer>
+
+    <script>
+        // Setup Variables
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.card');
+
+        // Define Colors
+        const colors = {
+            reading: '#3498db',   // Blue
+            math: '#9b59b6',      // Purple
+            website: '#f39c12',   // Orange for Websites
+            testprep: '#1abc9c',  // Teal
+            default: '#95a5a6'    // Grey
+        };
+
+        // Auto-Colorize Cards on Load
+        cards.forEach(card => {
+            const tag = card.querySelector('.card-tag');
+            const tagText = tag.textContent.toLowerCase();
+
+            let color = colors.default;
+
+            if (tagText.includes('math')) {
+                color = colors.math;
+            } else if (tagText.includes('reading')) {
+                color = colors.reading;
+            } else if (tagText.includes('website')) {
+                color = colors.website;
+            } else if (tagText.includes('prep') || tagText.includes('nwea')) {
+                color = colors.testprep;
+            }
+
+            tag.style.backgroundColor = color;
+            tag.style.color = 'white';
+            card.style.borderTopColor = color;
+        });
+
+        // Tab Filtering Logic
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const tag = card.querySelector('.card-tag').textContent.toLowerCase();
+
+                    if (filterValue === 'all') {
+                        card.style.display = 'flex';
+                    }
+                    else if (filterValue === 'websites') {
+                        tag.includes('website') ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                    else if (filterValue === 'reading-reviews') {
+                        (tag.includes('reading') && !title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                    else if (filterValue === 'reading-tests') {
+                        (tag.includes('reading') && title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                    else if (filterValue === 'math-reviews') {
+                        (tag.includes('math') && !title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                    else if (filterValue === 'math-tests') {
+                        (tag.includes('math') && title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
