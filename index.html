@@ -433,6 +433,7 @@
                     const title = card.querySelector('.card-title').textContent.toLowerCase();
                     const tag = card.querySelector('.card-tag').textContent.toLowerCase();
 
+                    const isTest = title.includes('test') || title.includes('quiz');
                     if (filterValue === 'all') {
                         card.style.display = 'flex';
                     }
@@ -440,16 +441,16 @@
                         tag.includes('website') ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'reading-reviews') {
-                        (tag.includes('reading') && !title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        (tag.includes('reading') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'reading-tests') {
-                        (tag.includes('reading') && title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        (tag.includes('reading') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'math-reviews') {
-                        (tag.includes('math') && !title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        (tag.includes('math') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'math-tests') {
-                        (tag.includes('math') && title.includes('test')) ? card.style.display = 'flex' : card.style.display = 'none';
+                        (tag.includes('math') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                 });
             });
