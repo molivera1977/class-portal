@@ -195,6 +195,12 @@
             letter-spacing: 0.5px;
         }
 
+        /* Locked (not-yet-open) cards */
+        .card-locked { filter: grayscale(1); opacity: 0.55; }
+        .card-locked:hover { transform: none; box-shadow: 0 10px 20px rgba(0,0,0,0.08), 0 6px 6px rgba(0,0,0,0.1); }
+        .card-locked:hover .card-image img { transform: none; }
+        .lock-badge { margin-top: 10px; font-size: 0.85rem; font-weight: 700; color: #555; }
+
         /* Footer */
         footer {
             text-align: center;
@@ -307,17 +313,17 @@
             </div>
         </a>
 
-        <!-- HIDDEN until later this week (Marcos 9/28) — uncomment to reopen
-        <a href="https://molivera1977.github.io/math-module-1-review/" class="card" target="_blank">
+        <!-- LOCKED until later this week (Marcos 9/28): grayed out; site allows Teacher Access only. To open: remove card-locked + the lock badge, and set REVIEW_OPEN = true in the review's script.js -->
+        <a href="https://molivera1977.github.io/math-module-1-review/" class="card card-locked" target="_blank" title="Not open yet">
             <div class="card-image">
                 <img loading="lazy" src="images/math-module-1-review-2026.webp" alt="Math Module 1 Review">
             </div>
             <div class="card-content">
                 <div class="card-title">Math Module 1 Review</div>
                 <span class="card-tag">Math</span>
+                <span class="lock-badge">🔒 Coming Soon</span>
             </div>
         </a>
-        -->
 
     </main>
 
