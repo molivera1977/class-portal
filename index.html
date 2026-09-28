@@ -183,21 +183,41 @@
             color: var(--primary-color);
         }
 
+        .title-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px 10px;
+            margin-bottom: 10px;
+        }
+
+        .title-row .card-title {
+            margin-bottom: 0;
+        }
+
         .class-code {
-            align-self: flex-start;
-            margin-bottom: 12px;
-            padding: 6px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+            padding: 3px 8px;
             border: 2px dashed #f7941d;
             border-radius: 10px;
             background: #fff7ec;
-            color: #555;
-            font-size: 1rem;
+        }
+
+        .class-code span {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .class-code strong {
             font-family: "Courier New", monospace;
-            font-size: 1.3rem;
-            letter-spacing: 2px;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
             color: #222;
         }
 
@@ -286,8 +306,10 @@
                 <img loading="lazy" src="images/epic.webp" alt="Epic!">
             </div>
             <div class="card-content">
-                <div class="card-title">Epic! Books</div>
-                <div class="class-code">Class Code: <strong>gmj6220</strong></div>
+                <div class="title-row">
+                    <div class="card-title">Epic! Books</div>
+                    <div class="class-code"><span>Class Code</span><strong>gmj6220</strong></div>
+                </div>
                 <span class="card-tag">Website</span>
             </div>
         </a>
