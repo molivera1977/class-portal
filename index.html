@@ -275,6 +275,7 @@
             <button class="filter-btn" data-filter="reading-tests">Reading Tests</button>
             <button class="filter-btn" data-filter="math-reviews">Math Reviews</button>
             <button class="filter-btn" data-filter="math-tests">Math Tests</button>
+            <button class="filter-btn" data-filter="sbac-reviews">SBAC Reviews</button>
             <button class="filter-btn" data-filter="websites">Websites</button>
         </div>
     </div>
@@ -351,6 +352,17 @@
             <div class="card-content">
                 <div class="card-title">Math Fact Review: Multiples of 10</div>
                 <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/sbac-inferences-lit-fiab-review/" class="card card-locked" target="_blank" title="Not open yet">
+            <div class="card-image">
+                <img loading="lazy" src="images/sbac-inferences-lit-fiab-review.webp" alt="SBAC Practice: Make &amp; Support Inferences">
+            </div>
+            <div class="card-content">
+                <div class="card-title">SBAC Practice: Inferences</div>
+                <span class="card-tag">Reading</span>
+                <span class="lock-badge">🔒 Coming Soon</span>
             </div>
         </a>
 
@@ -461,6 +473,12 @@
                     }
                     else if (filterValue === 'math-tests') {
                         (tag.includes('math') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                    // SBAC cuts across Reading and Math, so it keys off the
+                    // title prefix every SBAC card uses ("SBAC Practice: …")
+                    // rather than the subject tag.
+                    else if (filterValue === 'sbac-reviews') {
+                        (title.includes('sbac') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                 });
             });
