@@ -275,6 +275,7 @@
             <button class="filter-btn" data-filter="reading-tests">Reading Tests</button>
             <button class="filter-btn" data-filter="math-reviews">Math Reviews</button>
             <button class="filter-btn" data-filter="math-tests">Math Tests</button>
+            <button class="filter-btn" data-filter="science">Science</button>
             <button class="filter-btn" data-filter="sbac-reviews">SBAC Reviews</button>
             <button class="filter-btn" data-filter="websites">Websites</button>
         </div>
@@ -362,6 +363,16 @@
             <div class="card-content">
                 <div class="card-title">Math Fact Review: Multiples of 10</div>
                 <span class="card-tag">Website</span>
+            </div>
+        </a>
+
+        <a href="https://molivera1977.github.io/science-starting-and-stopping/" class="card" target="_blank">
+            <div class="card-image">
+                <img loading="lazy" src="images/science-starting-stopping.webp?v=1" alt="Science: Starting and Stopping">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Science: Starting and Stopping</div>
+                <span class="card-tag">Science</span>
             </div>
         </a>
 
@@ -487,6 +498,7 @@
             math: '#9b59b6',      // Purple
             website: '#f39c12',   // Orange for Websites
             testprep: '#1abc9c',  // Teal
+            science: '#2E7D6B',   // Green — matches the science site itself
             default: '#95a5a6'    // Grey
         };
 
@@ -505,6 +517,8 @@
                 color = colors.website;
             } else if (tagText.includes('prep') || tagText.includes('nwea')) {
                 color = colors.testprep;
+            } else if (tagText.includes('science')) {
+                color = colors.science;
             }
 
             tag.style.backgroundColor = color;
@@ -530,6 +544,9 @@
                     }
                     else if (filterValue === 'websites') {
                         tag.includes('website') ? card.style.display = 'flex' : card.style.display = 'none';
+                    }
+                    else if (filterValue === 'science') {
+                        tag.includes('science') ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'reading-reviews') {
                         (tag.includes('reading') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
