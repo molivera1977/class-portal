@@ -366,6 +366,18 @@
             </div>
         </a>
 
+        <!-- LOCKED until Marcos opens it: grayed out; site allows Teacher Access only. To open: remove card-locked + title + the lock badge, and set REVIEW_OPEN (and later TEST_OPEN) = true in math-module-2/script.js -->
+        <a href="https://molivera1977.github.io/math-module-2/" class="card card-locked" target="_blank" title="Not open yet">
+            <div class="card-image">
+                <img loading="lazy" src="images/math-module-2-2026.webp" alt="Math Module 2 Review and Test">
+            </div>
+            <div class="card-content">
+                <div class="card-title">Math Module 2 Review and Test</div>
+                <span class="card-tag">Math</span>
+                <span class="lock-badge">🔒 Coming Soon</span>
+            </div>
+        </a>
+
         <a href="https://molivera1977.github.io/science-starting-and-stopping/" class="card" target="_blank">
             <div class="card-image">
                 <img loading="lazy" src="images/science-starting-stopping.webp?v=2" alt="Science: Starting and Stopping">
@@ -537,6 +549,8 @@
                     const tag = card.querySelector('.card-tag').textContent.toLowerCase();
 
                     const isTest = title.includes('test') || title.includes('quiz');
+                    // One site can hold both ("… Review and Test", "… Review and Quiz") — it belongs under both buttons
+                    const isReview = !isTest || title.includes('review');
                     if (filterValue === 'all') {
                         card.style.display = 'flex';
                     }
@@ -547,13 +561,13 @@
                         tag.includes('science') ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'reading-reviews') {
-                        (tag.includes('reading') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
+                        (tag.includes('reading') && isReview) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'reading-tests') {
                         (tag.includes('reading') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'math-reviews') {
-                        (tag.includes('math') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
+                        (tag.includes('math') && isReview) ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     else if (filterValue === 'math-tests') {
                         (tag.includes('math') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
