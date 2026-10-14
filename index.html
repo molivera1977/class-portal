@@ -271,10 +271,8 @@
     <div class="filter-container">
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="reading-reviews">Reading Reviews</button>
-            <button class="filter-btn" data-filter="reading-tests">Reading Tests</button>
-            <button class="filter-btn" data-filter="math-reviews">Math Reviews</button>
-            <button class="filter-btn" data-filter="math-tests">Math Tests</button>
+            <button class="filter-btn" data-filter="reading">Reading</button>
+            <button class="filter-btn" data-filter="math">Math</button>
             <button class="filter-btn" data-filter="science">Science</button>
             <button class="filter-btn" data-filter="sbac-reviews">SBAC Reviews</button>
             <button class="filter-btn" data-filter="websites">Websites</button>
@@ -387,12 +385,13 @@
             </div>
         </a>
 
-        <a href="https://molivera1977.github.io/a-world-of-change-unit-test/" class="card" target="_blank">
+        <!-- One card for the unit (Marcos 10/14). It opens a-world-of-change/ in this repo: Step 1 = a-world-of-change-review, Step 2 = a-world-of-change-unit-test (two sites, one front door). -->
+        <a href="https://molivera1977.github.io/class-portal/a-world-of-change/" class="card" target="_blank">
             <div class="card-image">
-                <img loading="lazy" src="images/awoc-test-2026.webp?v=open" alt="A World of Change Test">
+                <img loading="lazy" src="images/a-world-of-change-2026.webp" alt="A World of Change Review and Test">
             </div>
             <div class="card-content">
-                <div class="card-title">A World of Change Test</div>
+                <div class="card-title">A World of Change Review and Test</div>
                 <span class="card-tag">Reading</span>
             </div>
         </a>
@@ -404,16 +403,6 @@
             <div class="card-content">
                 <div class="card-title">Rounding Review and Quiz - Numberline Edition</div>
                 <span class="card-tag">Math</span>
-            </div>
-        </a>
-
-        <a href="https://molivera1977.github.io/a-world-of-change-review/" class="card" target="_blank">
-            <div class="card-image">
-                <img loading="lazy" src="images/awoc-review-2026.webp" alt="A World of Change Review">
-            </div>
-            <div class="card-content">
-                <div class="card-title">A World of Change Review</div>
-                <span class="card-tag">Reading</span>
             </div>
         </a>
 
@@ -539,8 +528,6 @@
                     const tag = card.querySelector('.card-tag').textContent.toLowerCase();
 
                     const isTest = title.includes('test') || title.includes('quiz');
-                    // One site can hold both ("… Review and Test", "… Review and Quiz") — it belongs under both buttons
-                    const isReview = !isTest || title.includes('review');
                     if (filterValue === 'all') {
                         card.style.display = 'flex';
                     }
@@ -550,17 +537,13 @@
                     else if (filterValue === 'science') {
                         tag.includes('science') ? card.style.display = 'flex' : card.style.display = 'none';
                     }
-                    else if (filterValue === 'reading-reviews') {
-                        (tag.includes('reading') && isReview) ? card.style.display = 'flex' : card.style.display = 'none';
+                    // One button per subject (Marcos 10/14): a unit's review and test share a card now,
+                    // so "Reading" and "Math" each show everything with that tag.
+                    else if (filterValue === 'reading') {
+                        tag.includes('reading') ? card.style.display = 'flex' : card.style.display = 'none';
                     }
-                    else if (filterValue === 'reading-tests') {
-                        (tag.includes('reading') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
-                    else if (filterValue === 'math-reviews') {
-                        (tag.includes('math') && isReview) ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
-                    else if (filterValue === 'math-tests') {
-                        (tag.includes('math') && isTest) ? card.style.display = 'flex' : card.style.display = 'none';
+                    else if (filterValue === 'math') {
+                        tag.includes('math') ? card.style.display = 'flex' : card.style.display = 'none';
                     }
                     // SBAC cuts across Reading and Math, so it keys off the
                     // title prefix every SBAC card uses ("SBAC Practice: …")
