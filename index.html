@@ -476,6 +476,26 @@
         <p><a href="2025-2026.html" style="color:#888;">Last Year's Class (2025–26)</a></p>
     </footer>
 
+    <script src="share.js?v=3"></script>
+    <script>
+        /* GUEST VIEW (share.js, a colleague's link: …/class-portal/?share=<code>).
+           Every card for one of Mr. O's own sites carries the code along, so the guest lands in
+           that site's Guest view. Messenger (student ↔ Mr. O messages) has no guest version, and the
+           photo's link to the Teacher Dashboard is turned off. Students never get any of this. */
+        (function guestPortal() {
+            if (!window.SHARE_MODE) return;
+            const code = new URLSearchParams(location.search).get('share');
+            document.querySelectorAll('a.card').forEach(card => {
+                const url = new URL(card.href);
+                if (!/(^|\.)molivera1977\.github\.io$|(^|\.)mroteacher\.com$/.test(url.hostname)) return;
+                if (/MrO-Messenger/i.test(url.pathname)) { card.style.display = 'none'; card.dataset.guestHidden = '1'; return; }
+                url.searchParams.set('share', code);
+                card.href = url.toString();
+            });
+            const dash = document.querySelector('a[href*="Teacher-Dashboard"]');
+            if (dash) { dash.removeAttribute('href'); dash.style.cursor = 'default'; }
+        })();
+    </script>
     <script>
         // Setup Variables
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -524,6 +544,7 @@
                 const filterValue = btn.getAttribute('data-filter');
 
                 cards.forEach(card => {
+                    if (card.dataset.guestHidden) { card.style.display = 'none'; return; }   // hidden in Guest view
                     const title = card.querySelector('.card-title').textContent.toLowerCase();
                     const tag = card.querySelector('.card-tag').textContent.toLowerCase();
 
