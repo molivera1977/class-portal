@@ -51,6 +51,7 @@
   .start-btn.test { background: #c0392b; box-shadow: 0 6px 0 #922b21; }
   .start-btn.test:hover { box-shadow: 0 4px 0 #922b21; }
   /* The test is closed: gray, not clickable (Marcos 10/21: "the test should be grayed out") */
+  .teacher-open { display: inline-block; margin-top: 8px; font-size: 0.8rem; color: #767676; }
   .start-btn.locked, .start-btn.locked:hover { background: #6e6e6e; box-shadow: 0 6px 0 #4a4a4a; transform: none; cursor: not-allowed; }
   .form-btn-sub { display: block; font-size: 1rem; font-weight: normal; opacity: 0.92; margin-top: 2px; }
   .form-note { margin: 12px 0 0; font-size: 1.05rem; color: #555; }
@@ -101,8 +102,8 @@
       <button class="speak-btn" type="button" aria-label="Read Step 1 aloud">🔊</button>
       <span class="step-label">Step 1 — Review</span>
     </div>
-    <a class="start-btn" data-site="talent-show-review" href="https://mroteacher.com/talent-show-review/">📘 Review<span class="form-btn-sub">Vocabulary, Comprehension and Cloze</span></a>
-    <p class="form-note say">Practice the words and the story. You see the right answer after every question. Finish all three parts to open the test.</p>
+    <a class="start-btn" id="review-btn" data-site="talent-show-review" href="https://mroteacher.com/talent-show-review/">📘 Review<span class="form-btn-sub">Vocabulary, Comprehension and Cloze</span></a>
+    <p class="form-note say" id="review-note">Practice the words and the story. You see the right answer after every question. Finish all three parts to open the test.</p>
   </div>
 
   <div class="step-card">
@@ -120,6 +121,31 @@
   /* A share link (…/the-talent-show/?share=<code>) is handed on to the step that is opened. */
   /* ⬇ OPEN THE TEST: set TEST_OPEN = true here AND in talent-show-unit-test/script.js (same push). */
   var TEST_OPEN = true;
+  /* TEST DAY (Marcos 10/23): the review is closed during the test unless the Teacher PIN opened it on
+     this computer today (set on the review site; same key, same mroteacher.com). Keep TEST_DAYS the
+     same as talent-show-review/script.js. */
+  var TEST_DAYS = ['2026-10-23'];
+  (function lockReviewOnTestDay() {
+    if (new URLSearchParams(location.search).get('share')) return;
+    var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+    if (TEST_DAYS.indexOf(today) < 0) return;
+    try { if (localStorage.getItem('talent_review_unlock_v1') === today) return; } catch (e) {}
+    var btn = document.getElementById('review-btn');
+    btn.classList.add('locked');
+    btn.removeAttribute('href');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.innerHTML = '🔒 Review — Closed During the Test<span class="form-btn-sub">Mr. O can open it with the Teacher PIN</span>';
+    var note = document.getElementById('review-note');
+    note.textContent = 'The review is closed today while you take the test. Ask Mr. O if you need it.';
+    var lead = document.querySelector('.lead');
+    if (lead) lead.textContent = 'Today is test day. Take the test.';
+    var t = document.createElement('a');
+    t.className = 'teacher-open';
+    t.href = 'https://mroteacher.com/talent-show-review/';
+    t.textContent = 'Teacher: open the review on this computer';
+    note.insertAdjacentElement('afterend', t);
+  })();
+
   (function grayTestWhileClosed() {
     if (TEST_OPEN || new URLSearchParams(location.search).get('share')) return;   // a share link may look inside
     var btn = document.getElementById('test-btn');
