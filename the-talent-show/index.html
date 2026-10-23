@@ -99,7 +99,7 @@
 <script>
   /* A share link (…/the-talent-show/?share=<code>) is handed on to the step that is opened. */
   /* ⬇ OPEN THE TEST: set TEST_OPEN = true here AND in talent-show-unit-test/script.js (same push). */
-  var TEST_OPEN = false;
+  var TEST_OPEN = true;
   (function grayTestWhileClosed() {
     if (TEST_OPEN || new URLSearchParams(location.search).get('share')) return;   // a share link may look inside
     var btn = document.getElementById('test-btn');
