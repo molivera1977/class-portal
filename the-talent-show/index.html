@@ -60,6 +60,21 @@
   .steps .step-card { margin-bottom: 0; display: flex; flex-direction: column; }
   .steps .start-btn { flex: none; }
   @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+  .hero { display: flex; align-items: center; justify-content: center; gap: 32px; margin-bottom: 26px; }
+  .hero .cover { width: 200px; max-width: 40%; margin: 0; flex: none; }
+  .hero-text { text-align: left; }
+  .hero h1 { text-align: left; font-size: 2.3rem; line-height: 1.2; }
+  .hero h1 span { display: block; }
+  .hero h1 .h1-bottom { color: #b8336a; }
+  .hero .welcome-sub, .hero .lead { text-align: left; }
+  .hero .welcome-sub { margin: 10px 0 14px; font-size: 1.05rem; }
+  .hero .lead { margin: 0; }
+  @media (max-width: 600px) {
+    .hero { flex-direction: column; gap: 14px; }
+    .hero .cover { width: 170px; max-width: 60%; }
+    .hero-text, .hero h1, .hero .welcome-sub, .hero .lead { text-align: center; }
+    .hero h1 { font-size: 1.6rem; }
+  }
   @media (max-width: 600px) {
     .container { margin: 1rem; padding: 1.4rem; }
     h1 { font-size: 1.4rem; }
@@ -70,10 +85,15 @@
 
 <script src="../share.js?v=3"></script>
 <div class="container">
-  <img class="cover" src="cover.webp" alt="The Talent Show — the story's cover" width="506" height="670">
-  <h1>🎭 The Talent Show — Review and Test</h1>
-  <p class="welcome-sub">How do your actions affect others?</p>
-  <p class="lead">Do the review first. Then take the test.</p>
+  <!-- Cover on the left, the title on the right in two lines (Marcos 10/22) -->
+  <div class="hero">
+    <img class="cover" src="cover.webp" alt="The Talent Show — the story's cover" width="506" height="670">
+    <div class="hero-text">
+      <h1><span class="h1-top">🎭 The Talent Show</span><span class="h1-bottom">Review and Test</span></h1>
+      <p class="welcome-sub">How do your actions affect others?</p>
+      <p class="lead">Do the review first. Then take the test.</p>
+    </div>
+  </div>
 
   <div class="steps">
   <div class="step-card">
