@@ -121,7 +121,7 @@
         var spans = Array.prototype.slice.call(note.querySelectorAll('.wrd'));
         var intro = card.querySelector('.step-label').textContent.replace('—', ',') + '. ';
         var u = new SpeechSynthesisUtterance(intro + spans.map(function (s) { return s.textContent; }).join(' '));
-        u.lang = 'en-US'; u.rate = 0.92;
+        u.lang = 'en-US'; u.rate = 0.82;
         var introWords = intro.trim().split(/\s+/).length, said = 0;
         u.onboundary = function (e) {
           if (e.name !== 'word') return;
