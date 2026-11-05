@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollars and Sense — Review and Test</title>
+<!-- tab icon: Mr. O's profile picture, round (Marcos 10/24: "why not this") -->
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png?v=1">
+<link rel="icon" type="image/png" sizes="64x64" href="../images/favicon-64.png?v=1">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png?v=1">
+<!--
+  One portal card for the unit, the same front door as The Talent Show
+  (Marcos 11/3: "Let's work on the Dollars and Sense Review and Test site").
+  Step 1 opens dollars-sense-review, Step 2 opens dollars-sense-unit-test
+  (NOT last year's dollars-and-sense-review / -test).
+  Nothing is signed in, saved or sent here. A share link (?share=<code>) is
+  passed along to whichever step is opened.
+-->
+<style>
+  :root { --primary: #1a3a6b; --primary-dark: #0f2346; --text: #1b1b1b; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Verdana", Geneva, sans-serif;
+    background: linear-gradient(135deg, #1a3a6b 0%, #b8336a 100%);
+    color: var(--text); margin: 0; padding: 0; line-height: 1.6; min-height: 100vh;
+  }
+  .container {
+    max-width: 980px; margin: 2rem auto; background: #fff; padding: 2.5rem;
+    border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  h1 { text-align: center; color: var(--primary); letter-spacing: 1px; margin: 0; font-size: 1.75rem; }
+  .cover { display: block; width: 230px; max-width: 60%; height: auto; margin: 0 auto 18px;
+    border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.28); }
+  .welcome-sub { text-align: center; color: #888; font-size: 0.95rem; margin: 4px 0 26px; letter-spacing: 0.5px; }
+  .lead { text-align: center; font-size: 1.15rem; color: #666; margin: 0 0 24px; }
+  .step-card {
+    background: #fafafa; border: 2px solid #eee; border-radius: 16px;
+    padding: 18px 20px 20px; margin-bottom: 18px;
+  }
+  .step-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .step-label {
+    font-size: 0.85rem; font-weight: bold; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--primary);
+  }
+  .speak-btn {
+    width: 38px; height: 38px; flex: none; border-radius: 50%; border: 2px solid var(--primary);
+    background: #fff; color: var(--primary); font-size: 1.05rem; cursor: pointer; line-height: 1;
+  }
+  .start-btn {
+    display: block; width: 100%; text-align: center; text-decoration: none; cursor: pointer;
+    font-family: inherit; font-size: 1.3rem; font-weight: bold; color: #fff;
+    background: var(--primary); border: none; border-radius: 14px; padding: 18px 16px;
+    box-shadow: 0 6px 0 var(--primary-dark); transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .start-btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 var(--primary-dark); }
+  .start-btn.test { background: #c0392b; box-shadow: 0 6px 0 #922b21; }
+  .start-btn.test:hover { box-shadow: 0 4px 0 #922b21; }
+  /* The test is closed: gray, not clickable (Marcos 10/21: "the test should be grayed out") */
+  .teacher-open { display: inline-block; margin-top: 8px; font-size: 0.8rem; color: #767676; }
+  .start-btn.locked, .start-btn.locked:hover { background: #6e6e6e; box-shadow: 0 6px 0 #4a4a4a; transform: none; cursor: not-allowed; }
+  .form-btn-sub { display: block; font-size: 1rem; font-weight: normal; opacity: 0.92; margin-top: 2px; }
+  .form-note { margin: 12px 0 0; font-size: 1.05rem; color: #555; }
+  .wrd.hl { background: #ffe58a; border-radius: 4px; }
+  /* Review and Test side by side, so a click meant for the test never lands on the review (Marcos 10/22) */
+  .steps { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch; }
+  .steps .step-card { margin-bottom: 0; display: flex; flex-direction: column; }
+  .steps .start-btn { flex: none; }
+  @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+  .hero { display: flex; align-items: center; justify-content: center; gap: 32px; margin-bottom: 26px; }
+  .hero .cover { width: 200px; max-width: 40%; margin: 0; flex: none; }
+  .hero-text { text-align: left; }
+  .hero h1 { text-align: left; font-size: 2.3rem; line-height: 1.2; }
+  .hero h1 span { display: block; }
+  .hero h1 .h1-bottom { color: #b8336a; }
+  .hero .welcome-sub, .hero .lead { text-align: left; }
+  .hero .welcome-sub { margin: 10px 0 14px; font-size: 1.05rem; }
+  .hero .lead { margin: 0; }
+  @media (max-width: 600px) {
+    .hero { flex-direction: column; gap: 14px; }
+    .hero .cover { width: 170px; max-width: 60%; }
+    .hero-text, .hero h1, .hero .welcome-sub, .hero .lead { text-align: center; }
+    .hero h1 { font-size: 1.6rem; }
+  }
+  @media (max-width: 600px) {
+    .container { margin: 1rem; padding: 1.4rem; }
+    h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<script src="../share.js?v=3"></script>
+<div class="container">
+  <!-- Cover on the left, the title on the right in two lines (Marcos 10/22) -->
+  <div class="hero">
+    <img class="cover" src="cover.webp?v=2" alt="Dollars and Sense — the title, and Blake Mycoskie with children in Argentina" width="506" height="629">
+    <div class="hero-text">
+      <h1><span class="h1-top">Dollars and Sense</span><span class="h1-bottom">Review and Test</span></h1>
+      <p class="welcome-sub">How can starting a business help others?</p>
+      <p class="lead">Do the review first. Then take the test.</p>
+    </div>
+  </div>
+
+  <div class="steps">
+  <div class="step-card">
+    <div class="step-row">
+      <button class="speak-btn" type="button" aria-label="Read Step 1 aloud">🔊</button>
+      <span class="step-label">Step 1 — Review</span>
+    </div>
+    <a class="start-btn" id="review-btn" data-site="dollars-sense-review" href="https://mroteacher.com/dollars-sense-review/">📘 Review<span class="form-btn-sub">Vocabulary, Comprehension and Cloze</span></a>
+    <p class="form-note say" id="review-note">Practice the words and the story. You see the right answer after every question. Finish all three parts to open the test.</p>
+  </div>
+
+  <div class="step-card">
+    <div class="step-row">
+      <button class="speak-btn" type="button" aria-label="Read Step 2 aloud">🔊</button>
+      <span class="step-label">Step 2 — The Test</span>
+    </div>
+    <a class="start-btn test" id="test-btn" data-site="dollars-sense-unit-test" href="https://mroteacher.com/dollars-sense-unit-test/">📝 Take the Test<span class="form-btn-sub">Vocabulary, Comprehension, Written Response and Cloze · one try</span></a>
+    <p class="form-note say" id="test-note">Show what you know. The test opens after you finish the review. You take the test one time, so do your best work.</p>
+  </div>
+  </div>
+</div>
+
+<script>
+  /* A share link (…/dollars-and-sense/?share=<code>) is handed on to the step that is opened. */
+  /* ⬇ OPEN THE TEST: set TEST_OPEN = true here AND in dollars-sense-unit-test/script.js (same push). */
+  var TEST_OPEN = false;
+  /* TEST DAY (Marcos 10/23, The Talent Show; Dollars and Sense test Friday 11/6): the review is closed during the test unless the Teacher PIN opened it on
+     this computer today (set on the review site; same key, same mroteacher.com). Keep TEST_DAYS the
+     same as dollars-sense-review/script.js. */
+  var TEST_DAYS = ['2026-11-06'];
+  (function lockReviewOnTestDay() {
+    if (new URLSearchParams(location.search).get('share')) return;
+    var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+    if (TEST_DAYS.indexOf(today) < 0) return;
+    try { if (localStorage.getItem('ds_review_unlock_v1') === today) return; } catch (e) {}
+    var btn = document.getElementById('review-btn');
+    btn.classList.add('locked');
+    btn.removeAttribute('href');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.innerHTML = '🔒 Review — Closed During the Test<span class="form-btn-sub">Mr. O can open it with the Teacher PIN</span>';
+    var note = document.getElementById('review-note');
+    note.textContent = 'The review is closed today while you take the test. Ask Mr. O if you need it.';
+    var lead = document.querySelector('.lead');
+    if (lead) lead.textContent = 'Today is test day. Take the test.';
+    var t = document.createElement('a');
+    t.className = 'teacher-open';
+    t.href = 'https://mroteacher.com/dollars-sense-review/';
+    t.textContent = 'Teacher: open the review on this computer';
+    note.insertAdjacentElement('afterend', t);
+  })();
+
+  (function grayTestWhileClosed() {
+    if (TEST_OPEN || new URLSearchParams(location.search).get('share')) return;   // a share link may look inside
+    var btn = document.getElementById('test-btn');
+    btn.classList.add('locked');
+    btn.removeAttribute('href');
+    btn.setAttribute('aria-disabled', 'true');
+    btn.innerHTML = '🔒 The Test — Not Open Yet<span class="form-btn-sub">Mr. O will open it when it is time</span>';
+    document.getElementById('test-note').textContent = 'The test is not open yet. Mr. O will open it when it is time. Do the review first.';
+  })();
+
+  (function passShareAlong() {
+    var share = new URLSearchParams(location.search).get('share');
+    if (!share) return;
+    document.querySelectorAll('a.start-btn').forEach(function (a) {
+      a.href = a.href + '?share=' + encodeURIComponent(share);
+    });
+  })();
+
+  /* Read aloud: the step's name, its button and its note, with each word lit as it is said. */
+  (function readAloud() {
+    var active = null;
+    function stop() {
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.wrd.hl').forEach(function (w) { w.classList.remove('hl'); });
+      if (active) { active.textContent = '🔊'; active = null; }
+    }
+    document.querySelectorAll('.speak-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (active === btn) { stop(); return; }
+        stop();
+        var card = btn.closest('.step-card');
+        var note = card.querySelector('.say');
+        if (!note.querySelector('.wrd')) {
+          note.innerHTML = note.textContent.split(/(\s+)/).map(function (part) {
+            return /\S/.test(part) ? '<span class="wrd">' + part + '</span>' : part;
+          }).join('');
+        }
+        var spans = Array.prototype.slice.call(note.querySelectorAll('.wrd'));
+        var intro = card.querySelector('.step-label').textContent.replace('—', ',') + '. ';
+        var u = new SpeechSynthesisUtterance(intro + spans.map(function (s) { return s.textContent; }).join(' '));
+        u.lang = 'en-US'; u.rate = 0.82;
+        var introWords = intro.trim().split(/\s+/).length, said = 0;
+        u.onboundary = function (e) {
+          if (e.name !== 'word') return;
+          spans.forEach(function (s) { s.classList.remove('hl'); });
+          var at = said - introWords;
+          if (at >= 0 && spans[at]) spans[at].classList.add('hl');
+          said++;
+        };
+        u.onend = function () { if (active === btn) stop(); };
+        active = btn; btn.textContent = '⏹';
+        window.speechSynthesis.speak(u);
+      });
+    });
+    window.addEventListener('pagehide', stop);
+  })();
+</script>
+</body>
+</html>
