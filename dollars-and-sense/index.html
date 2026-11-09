@@ -129,7 +129,7 @@
   /* TEST DAY (Marcos 10/23, The Talent Show; Dollars and Sense test Friday 11/6): the review is closed during the test unless the Teacher PIN opened it on
      this computer today (set on the review site; same key, same mroteacher.com). Keep TEST_DAYS the
      same as dollars-sense-review/script.js. */
-  var TEST_DAYS = [];   // no test day set (Marcos 11/6: a day behind, no test today); keep the same as dollars-sense-review/script.js
+  var TEST_DAYS = ['2026-11-09'];   // Marcos 11/9: "lock review"; keep the same as dollars-sense-review/script.js
   (function lockReviewOnTestDay() {
     if (new URLSearchParams(location.search).get('share')) return;
     var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
