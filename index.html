@@ -257,6 +257,20 @@
             .filter-btn { padding: 8px 15px; font-size: 0.8rem; }
             .header-side-img { display: none; }
         }
+        /* GUEST EDITION (Marcos 11/16: "option b, but i want it known that no data is saved or sent to Mr. O" →
+           "results will display after every activity but no data will be sent to Mr. O" → "too wordy... try Results will
+           display but no data will be stored" → "do your change": a browser does keep a visit's answers until the next
+           visit starts clean, so the line says what is exactly true — nothing reaches Mr. O):
+           on a guest link the portal says which edition it is, in a small banner under "4th Grade", in place of
+           share.js's gray strip across the top (that strip's "your results show at the end" is about the sites). */
+        .share-banner { display: none !important; }
+        .guest-edition {
+            display: inline-block; margin-top: 14px; position: relative; z-index: 10;
+            background: #fff; color: #2c3e50; border-radius: 18px; padding: 7px 20px 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18); line-height: 1.35; max-width: calc(100% - 16px); box-sizing: border-box;
+        }
+        .guest-edition b { display: block; font-size: 1rem; }
+        .guest-edition span { display: block; font-size: 0.85rem; color: #4a5a6a; }
     </style>
 </head>
 <body>
@@ -623,24 +637,48 @@
         <p>&copy; 2026 Mr. O's Class - 4th Grade</p>
     </footer>
 
-    <script src="share.js?v=3"></script>
+    <script src="share.js?v=9"></script>
     <script>
         /* GUEST VIEW (share.js, a colleague's link: …/class-portal/?share=<code>).
            Every card for one of Mr. O's own sites carries the code along, so the guest lands in
            that site's Guest view. Messenger (student ↔ Mr. O messages) has no guest version, and the
-           photo's link to the Teacher Dashboard is turned off. Students never get any of this. */
+           photo's link to the Teacher Dashboard is turned off. Students never get any of this.
+           THE TEACHER/ADMIN LINK (share.js v9, Marcos 11/16: "Yes, add it"): the portal knows that code too,
+           and its cards hand it on to every site with Teacher Mode (TEACHER_SITES), which then opens on its
+           two big buttons. A site without a teacher link gets the student guest code instead, so it still
+           opens as a guest view and never as the plain student site. A site that gains a teacher link goes
+           on TEACHER_SITES the same day (and on the Guest View Links page). */
         (function guestPortal() {
             if (!window.SHARE_MODE) return;
             const code = new URLSearchParams(location.search).get('share');
+            const STUDENT_CODE = 'mro';   // share.js SHARE_CODE (the test holds the two the same)
+            const TEACHER_SITES = ['class-portal',   // its four subject pages hand the code on to their Review and Test
+                'math-module-1-review', 'math-module-1-test', 'math-module-2', 'math-module-3', 'math-module-4',
+                'math-rounding-quiz', 'math-rounding-quiz-2', 'math-fact-review', 'sbac-place-value-fiab-review',
+                'sbac-base-ten-iab-review', 'the-lab', 'a-world-of-change-review', 'a-world-of-change-unit-test',
+                'talent-show-review', 'talent-show-unit-test', 'dollars-sense-review', 'dollars-sense-unit-test',
+                'rad-online-quiz-1', 'rad-practice', 'inference-practice', 'vocab-practice', 'qps-literacy-hub',
+                'parts-of-speech-hq', 'sbac-inferences-lit-fiab-review', 'sbac-read-literary-iab-review',
+                'science-starting-and-stopping', 'science-energy-and-motion'];
             document.querySelectorAll('a.card').forEach(card => {
                 const url = new URL(card.href);
                 if (!/(^|\.)molivera1977\.github\.io$|(^|\.)mroteacher\.com$/.test(url.hostname)) return;
                 if (/MrO-Messenger/i.test(url.pathname)) { card.style.display = 'none'; card.dataset.guestHidden = '1'; return; }
-                url.searchParams.set('share', code);
+                const site = url.pathname.split('/')[1];
+                url.searchParams.set('share', window.SHARE_TEACHER && !TEACHER_SITES.includes(site) ? STUDENT_CODE : code);
                 card.href = url.toString();
             });
             const dash = document.querySelector('a[href*="Teacher-Dashboard"]');
             if (dash) { dash.removeAttribute('href'); dash.style.cursor = 'default'; }
+            // the Edition banner under "4th Grade" (its look is in the style sheet, .guest-edition)
+            const edition = document.createElement('div');
+            edition.className = 'guest-edition';
+            const name = document.createElement('b');
+            name.textContent = window.SHARE_TEACHER ? '🧑‍🏫 Teacher Guest / Admin Guest Edition' : '🎒 Student Guest Edition';
+            const promise = document.createElement('span');
+            promise.textContent = 'Results will display, but nothing is sent to Mr. O.';
+            edition.append(name, promise);
+            document.querySelector('header p').insertAdjacentElement('afterend', edition);
         })();
     </script>
     <script>
