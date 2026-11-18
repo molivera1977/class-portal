@@ -225,6 +225,9 @@
             color: #222;
         }
 
+        /* A card can have more than one tag (Marcos 11/17: "each card should be able to be sorted by multiple ways if is
+           more than one thing. SBAC practice should be both sbac practice and whatever subject it is") */
+        .card-tags { align-self: flex-start; display: flex; flex-wrap: wrap; gap: 6px; }
         .card-tag {
             align-self: flex-start;
             padding: 5px 12px;
@@ -294,7 +297,7 @@
             <button class="filter-btn" data-filter="reading">Reading</button>
             <button class="filter-btn" data-filter="math">Math</button>
             <button class="filter-btn" data-filter="science">Science</button>
-            <button class="filter-btn" data-filter="sbac-reviews">SBAC Reviews</button>
+            <button class="filter-btn" data-filter="sbac">SBAC Practice</button>
             <button class="filter-btn" data-filter="websites">Websites</button>
         </div>
     </div>
@@ -317,7 +320,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">IXL Learning</div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Math</span><span class="card-tag">Reading</span></div>
             </div>
         </a>
 
@@ -330,7 +333,7 @@
                     <div class="card-title">Epic! Books</div>
                     <div class="class-code"><span>Class Code</span><strong>gmj6220</strong></div>
                 </div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Reading</span></div>
             </div>
         </a>
 
@@ -341,7 +344,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">Math Fact Review</div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Math</span></div>
             </div>
         </a>
 
@@ -361,7 +364,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">Mr. O's General Knowledge Hub</div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Math</span><span class="card-tag">Reading</span></div>
             </div>
         </a>
 
@@ -372,7 +375,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">Wonders Vocabulary Practice</div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Reading</span></div>
             </div>
         </a>
 
@@ -384,7 +387,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">The Lab</div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Reading</span><span class="card-tag">Math</span></div>
             </div>
         </a>
 
@@ -397,7 +400,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">QPS Literacy Hub</div>
-                <span class="card-tag">Website</span>
+                <div class="card-tags"><span class="card-tag">Website</span><span class="card-tag">Reading</span></div>
             </div>
         </a>
 
@@ -424,7 +427,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">SBAC Practice: Base Ten</div>
-                <span class="card-tag">Math</span>
+                <div class="card-tags"><span class="card-tag">Math</span><span class="card-tag">SBAC Practice</span></div>
             </div>
         </a>
 
@@ -525,7 +528,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">SBAC Practice: Read Literary Texts</div>
-                <span class="card-tag">Reading</span>
+                <div class="card-tags"><span class="card-tag">Reading</span><span class="card-tag">SBAC Practice</span></div>
             </div>
         </a>
 
@@ -621,7 +624,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">SBAC Practice: Inferences</div>
-                <span class="card-tag">Reading</span>
+                <div class="card-tags"><span class="card-tag">Reading</span><span class="card-tag">SBAC Practice</span></div>
             </div>
         </a>
 
@@ -631,7 +634,7 @@
             </div>
             <div class="card-content">
                 <div class="card-title">SBAC Practice: Place Value</div>
-                <span class="card-tag">Math</span>
+                <div class="card-tags"><span class="card-tag">Math</span><span class="card-tag">SBAC Practice</span></div>
             </div>
         </a>
 
@@ -707,31 +710,26 @@
             website: '#f39c12',   // Orange for Websites
             testprep: '#1abc9c',  // Teal
             science: '#2E7D6B',   // Green — matches the science site itself
+            sbac: '#1abc9c',      // Teal — SBAC Practice
             default: '#95a5a6'    // Grey
         };
+        const colorOf = tagText =>
+            tagText.includes('sbac') ? colors.sbac :
+            tagText.includes('math') ? colors.math :
+            tagText.includes('reading') ? colors.reading :
+            tagText.includes('website') ? colors.website :
+            (tagText.includes('prep') || tagText.includes('nwea')) ? colors.testprep :
+            tagText.includes('science') ? colors.science : colors.default;
+        // Every tag on a card, in lower case: a card shows under each of its tags' buttons
+        const tagsOf = card => [...card.querySelectorAll('.card-tag')].map(t => t.textContent.toLowerCase());
 
-        // Auto-Colorize Cards on Load
+        // Auto-Colorize Cards on Load: each tag its own color; the card's top edge takes its first tag's
         cards.forEach(card => {
-            const tag = card.querySelector('.card-tag');
-            const tagText = tag.textContent.toLowerCase();
-
-            let color = colors.default;
-
-            if (tagText.includes('math')) {
-                color = colors.math;
-            } else if (tagText.includes('reading')) {
-                color = colors.reading;
-            } else if (tagText.includes('website')) {
-                color = colors.website;
-            } else if (tagText.includes('prep') || tagText.includes('nwea')) {
-                color = colors.testprep;
-            } else if (tagText.includes('science')) {
-                color = colors.science;
-            }
-
-            tag.style.backgroundColor = color;
-            tag.style.color = 'white';
-            card.style.borderTopColor = color;
+            card.querySelectorAll('.card-tag').forEach(tag => {
+                tag.style.backgroundColor = colorOf(tag.textContent.toLowerCase());
+                tag.style.color = 'white';
+            });
+            card.style.borderTopColor = colorOf(tagsOf(card)[0] || '');
         });
 
         // Tab Filtering Logic
@@ -744,33 +742,11 @@
 
                 cards.forEach(card => {
                     if (card.dataset.guestHidden) { card.style.display = 'none'; return; }   // hidden in Guest view
-                    const title = card.querySelector('.card-title').textContent.toLowerCase();
-                    const tag = card.querySelector('.card-tag').textContent.toLowerCase();
-
-                    const isTest = title.includes('test') || title.includes('quiz');
-                    if (filterValue === 'all') {
-                        card.style.display = 'flex';
-                    }
-                    else if (filterValue === 'websites') {
-                        tag.includes('website') ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
-                    else if (filterValue === 'science') {
-                        tag.includes('science') ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
-                    // One button per subject (Marcos 10/14): a unit's review and test share a card now,
-                    // so "Reading" and "Math" each show everything with that tag.
-                    else if (filterValue === 'reading') {
-                        tag.includes('reading') ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
-                    else if (filterValue === 'math') {
-                        tag.includes('math') ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
-                    // SBAC cuts across Reading and Math, so it keys off the
-                    // title prefix every SBAC card uses ("SBAC Practice: …")
-                    // rather than the subject tag.
-                    else if (filterValue === 'sbac-reviews') {
-                        (title.includes('sbac') && !isTest) ? card.style.display = 'flex' : card.style.display = 'none';
-                    }
+                    // One button per tag (Marcos 10/14: a unit's review and test share a card; 11/17: a card with more
+                    // than one tag shows under each of them — an SBAC Practice card under SBAC Practice and its subject)
+                    const want = { websites: 'website', science: 'science', reading: 'reading', math: 'math', sbac: 'sbac practice' }[filterValue];
+                    const show = filterValue === 'all' || tagsOf(card).some(t => t.includes(want));
+                    card.style.display = show ? 'flex' : 'none';
                 });
             });
         });
