@@ -125,11 +125,11 @@
 <script>
   /* A share link (…/animal-adaptations/?share=<code>) is handed on to the step that is opened. */
   /* ⬇ OPEN THE TEST: set TEST_OPEN = true here AND in adaptations-unit-test/script.js (same push). */
-  var TEST_OPEN = false;   // built 11/17 closed until Marcos says (test day Fri 11/20)
-  /* TEST DAY (Marcos 10/23, The Talent Show; Animal Adaptations test Friday 11/20): the review is closed during the test unless the Teacher PIN opened it on
+  var TEST_OPEN = true;    // OPEN 11/18 for Thu 11/19 (Marcos: "Open the test for tomorrow"; test moved from Fri 11/20)
+  /* TEST DAY (Marcos 10/23, The Talent Show; Animal Adaptations test Thursday 11/19, moved from Fri 11/20): the review is closed during the test unless the Teacher PIN opened it on
      this computer today (set on the review site; same key, same mroteacher.com). Keep TEST_DAYS the
      same as adaptations-review/script.js. */
-  var TEST_DAYS = ['2026-11-20'];   // Marcos 11/17: test Fri 11/20; keep the same as adaptations-review/script.js
+  var TEST_DAYS = ['2026-11-19'];   // Marcos 11/18: test Thu 11/19 (was Fri 11/20); keep the same as adaptations-review/script.js
   (function lockReviewOnTestDay() {
     if (new URLSearchParams(location.search).get('share')) return;
     var today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
